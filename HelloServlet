@@ -1,0 +1,138 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/hello")
+public class hello extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    public hello() {
+        super();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        PrintWriter pw = response.getWriter();
+        pw.println("<html><body><h2>Hiiii</h2></body></html>");
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
+    }
+}
+```
+
+---
+
+### Explanation of Each Part
+
+#### 1. **Import Statements**
+
+* `PrintWriter`: For sending character text to the client.
+* `@WebServlet`: Annotation for URL mapping.
+* `HttpServlet`, `HttpServletRequest`, `HttpServletResponse`: Classes for handling HTTP requests and responses.
+
+#### 2. **Servlet Mapping**
+
+```java
+@WebServlet("/hello")
+```
+
+* This maps the servlet to the `/hello` URL path.
+* When a user accesses this path, the servlet is triggered.
+
+#### 3. **Class Declaration**
+
+```java
+public class hello extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+```
+
+* Extends `HttpServlet` to gain access to lifecycle methods.
+* `serialVersionUID` is used during serialization for version control.
+
+#### 4. **Constructor**
+
+```java
+public hello() {
+    super();
+}
+```
+
+* Default constructor calling the superclass constructor.
+
+#### 5. **doGet() Method**
+
+```java
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    PrintWriter pw = response.getWriter();
+    pw.println("<html><body><h2>Hiiii</h2></body></html>");
+}
+```
+
+* Handles GET requests (e.g., user entering the URL).
+* Uses `PrintWriter` to send an HTML response to the client.
+
+#### 6. **doPost() Method**
+
+```java
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    doGet(request, response);
+}
+```
+
+* Handles POST requests (e.g., from forms).
+* Redirects logic to `doGet()` for simplicity.
+
+---
+
+### Output
+
+If you access `http://localhost:8080/YourApp/hello` in a browser, it will display:
+
+```html
+<html><body><h2>Hiiii</h2></body></html>
+```
+
+---
+
+### Summary Table
+
+| Part                    | Purpose                                    |
+| ----------------------- | ------------------------------------------ |
+| `@WebServlet("/hello")` | Maps the servlet to the URL                |
+| `doGet()`               | Handles GET requests and sends HTML        |
+| `doPost()`              | Handles POST requests by calling `doGet()` |
+| `PrintWriter`           | Writes the response to the browser         |
+
+---
+
+### Suggestions for Improvement
+
+* Set the content type:
+
+```java
+response.setContentType("text/html");
+```
+
+* Close the `PrintWriter`:
+
+```java
+pw.close();
+```
+
+* Follow Java naming conventions by renaming `hello` to `HelloServlet`.
+
+---
+
+### Final Note
+
+This is a basic servlet example. You can extend it further by handling form data,
